@@ -42,7 +42,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     }
     console.log('Code compiled successfully : g++ process exited with code '+compileResult.status);
 
-    const runCPPCodeResult = spawnSync('cppExecutable', {input: fssync.readFileSync('./input.txt'), encoding: 'utf-8', shell: true});
+    const runCPPCodeResult = spawnSync('./cppExecutable', {input: fssync.readFileSync('./input.txt'), encoding: 'utf-8', shell: true});
     console.log(' runCPPCodeResult.output - ', runCPPCodeResult.output);
     if(runCPPCodeResult.error){
         res.json({'error':'Runtime error', 'output':String(runCPPCodeResult.error.message)});
