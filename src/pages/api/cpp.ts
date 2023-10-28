@@ -11,6 +11,8 @@ type Data = {
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse<Data>){
 
+    req.method = 'POST';
+
     if(req.method=='POST'){
 
         
