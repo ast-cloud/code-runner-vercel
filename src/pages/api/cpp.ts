@@ -9,9 +9,8 @@ type Data = {
     output?: string;
   }
 
-export default async function handler( req: NextApiRequest, res: NextApiResponse<Data>){
 
-    req.method = 'POST';
+export default async function handler( req: NextApiRequest, res: NextApiResponse<Data>){
 
     if(req.method=='POST'){
 
