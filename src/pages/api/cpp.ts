@@ -12,21 +12,21 @@ type Data = {
 export default async function handler( req: NextApiRequest, res: NextApiResponse<Data>){
 
     try{
-        await fs.writeFile('./codeFile/code.cpp', req.body.code);
-        console.log('Code file created successfully.')
+        await fs.writeFile('./code.cpp', req.body.code);
+        console.log('Code file created successfully.');
     }catch(e){
         throw e;
     }
 
     try{
-        await fs.writeFile('./inputFile/input.txt', req.body.input);
-        console.log('Input file created successfully.')
+        await fs.writeFile('./input.txt', req.body.input);
+        console.log('Input file created successfully.');
     }catch(e){
         throw e;
     }
     
 
-    const compileResult = spawnSync('g++', ['-o', './codeFile/cppExecutable', './codeFile/code.cpp']);
+    const compileResult = spawnSync('g++', ['-o', './cppExecutable', './code.cpp']);
 
     if(compileResult.error){
         res.json({'error':'Compilation error', 'output':String(compileResult.error.message)});
@@ -42,7 +42,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     }
     console.log('Code compiled successfully : g++ process exited with code '+compileResult.status);
 
-    const runCPPCodeResult = spawnSync('./codeFile/cppExecutable', {input: fssync.readFileSync('./inputFile/input.txt'), encoding: 'utf-8', shell: true});
+    const runCPPCodeResult = spawnSync('cppExecutable', {input: fssync.readFileSync('./input.txt'), encoding: 'utf-8', shell: true});
     console.log(' runCPPCodeResult.output - ', runCPPCodeResult.output);
     if(runCPPCodeResult.error){
         res.json({'error':'Runtime error', 'output':String(runCPPCodeResult.error.message)});
@@ -59,20 +59,20 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     res.status(200).json({'error':'none', 'output': String(runCPPCodeResult.stdout)});
 
     try {
-        fssync.unlinkSync('./codeFile/code.cpp');
-        console.log(`File ./codeFile/code.cpp deleted successfully.`);
+        fssync.unlinkSync('./code.cpp');
+        console.log(`File ./code.cpp deleted successfully.`);
     } catch (err) {
         console.error(`Error deleting the file: ${err}`);
     }
     try {
-        fssync.unlinkSync('./codeFile/cppExecutable');
-        console.log(`File ./codeFile/cppExecutable deleted successfully.`);
+        fssync.unlinkSync('./cppExecutable');
+        console.log(`File ./cppExecutable deleted successfully.`);
     } catch (err) {
         console.error(`Error deleting the file: ${err}`);
     }
     try {
-        fssync.unlinkSync('./inputFile/input.txt');
-        console.log(`File ./inputFile/input.txt deleted successfully.`);
+        fssync.unlinkSync('./input.txt');
+        console.log(`File ./input.txt deleted successfully.`);
     } catch (err) {
         console.error(`Error deleting the file: ${err}`);
     }
