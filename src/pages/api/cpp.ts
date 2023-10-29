@@ -10,8 +10,8 @@ type Data = {
   }
 
 
-export default async function POST( req: NextApiRequest, res: NextApiResponse<Data>){
-
+export default async function handler( req: NextApiRequest, res: NextApiResponse<Data>){
+    console.log('Entered in cpp function')
     if(req.method=='POST'){
 
         
