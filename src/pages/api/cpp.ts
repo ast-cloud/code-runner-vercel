@@ -12,7 +12,7 @@ type Data = {
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse<Data>){
     console.log('Entered in cpp function')
-    await fs.writeFile('./hello.txt', 'Input text');
+    await fs.writeFile('/tmp/hello.txt', 'Input text');
     if(req.method=='POST'){
 
         
